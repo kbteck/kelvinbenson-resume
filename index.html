@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kelvin Benson — Online Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Base theme */
+    --bg:#e7ebeb;
+    --panel:#ffffff;
+    --card:#ffffff;
+    --border:#e6ebf2;
+    --text:#0f172a;
+    --muted:#475569;
+
+    /* Unified emerald palette */
+    --g-50:  #eaf7f4;
+    --g-100: #d2f0e9;
+    --g-200: #a9e4d6;
+    --g-300: #7bd6c1;
+    --g-600: #0c6f5f;
+    --g-shadow: 0 12px 30px rgba(12, 111, 95, .18);
+
+    /* CTA */
+    --btn:       #0c6f5f;
+    --btn-hover: #0a5f52;
+
+    /* States */
+    --good:#16a34a;
+    --bad:#e11d48;
+
+    /* Socials (hover blends to emerald) */
+    --ln:#0a66c2;
+    --xing:#006567;
+    --gh:#24292e;
+
+    /* Shadows */
+    --shadow-sm:0 2px 8px rgba(2,6,23,.05);
+    --shadow-md:0 6px 20px rgba(2,6,23,.08);
+    --shadow-lg:0 12px 30px rgba(2,6,23,.10);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background: var(--bg);
+    color:var(--text);
+    font:14px/1.6 "Montserrat", Arial, sans-serif;
+  }
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:260px 1fr;gap:28px;padding:28px}
+
+  /* -------- HAMBURGER -------- */
+  .hamburger{
+    display:none;flex-direction:column;justify-content:center;align-items:center;
+    width:38px;height:38px;background:transparent;border:none;cursor:pointer;margin-left:auto;z-index:110
+  }
+  .hamburger span{display:block;width:24px;height:3px;background:#0f172a;margin:4px 0;border-radius:2px;transition:.3s}
+  .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* Sidebar */
+  .sidebar{position:sticky;top:20px;height:calc(100vh - 40px);display:flex;flex-direction:column;gap:16px}
+  .brand-row{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background: #fff; /* Changed from var(--g-100) to white */
+  border:1px solid var(--border);border-radius:12px;position:relative;box-shadow:var(--shadow-sm)
+}
+
+  .dots{width:18px;height:18px;border-radius:6px;background:
+    radial-gradient(circle at 35% 35%, #ef4444 0 42%, transparent 44%),
+    radial-gradient(circle at 70% 25%, #f59e0b 0 42%, transparent 44%),
+    radial-gradient(circle at 50% 80%, var(--g-600) 0 42%, transparent 44%);
+  }
+  .brand-title{
+    font-weight:800;letter-spacing:.2px;color:#011d18;
+    padding:6px 8px;border-radius:8px;transition:.18s;
+  }
+
+  .nav{
+    list-style:none;margin:0;padding:8px;background:var(--panel);
+    border:1px solid var(--border);border-radius:12px;overflow:auto;box-shadow:var(--shadow-sm)
+  }
+  .nav li{margin:2px 0}
+  .nav a{
+    display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;
+    color:#1f2937;border:1px solid transparent;position:relative;transition:.18s ease;
+    background:linear-gradient(90deg, transparent, transparent);
+  }
+  .nav a::before{
+    content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);
+    width:4px;height:60%;border-radius:3px;background:transparent;transition:.2s;
+  }
+  .nav a:hover{
+    color:#0b1220;border-color:var(--g-200);background:var(--g-50);
+    box-shadow: inset 0 0 0 1px var(--g-200), var(--shadow-sm);
+  }
+  .nav a:hover::before{
+  background:transparent; /* Was: linear-gradient(180deg,var(--g-600),var(--g-300)) */
+}
+.nav a.active::before{
+  background:transparent; /* Optional: also remove for active state */
+}
+
+  .foot-mini{margin-top:auto;color:#64748b;font-size:12px;opacity:.95}
+
+  /* Main & cards */
+  .main{display:flex;flex-direction:column;gap:20px}
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow-md)
+  }
+  .card.pad{padding:18px}
+  .section-title{
+    display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;
+    text-transform:uppercase;color:#364152;font-size:12.5px;margin-bottom:12px
+  }
+  .section-title .bar{
+    flex:0 0 8px;height:8px;border-radius:999px;
+    background:linear-gradient(90deg,var(--g-600),var(--g-300));
+  }
+
+  /* Hero */
+  .hero{overflow:hidden}
+  .hero-banner{
+    height:190px;
+    background:
+      linear-gradient(180deg, rgba(12,111,95,.18), rgba(12,111,95,.10)),
+      url('https://i.ibb.co/1f0f387w/jjj.png') center/cover no-repeat;
+    border-bottom:1px solid var(--border)
+  }
+  .hero-row{display:flex;align-items:center;gap:16px;padding:16px}
+  .avatar{
+    margin-top:-50px;width:92px;height:92px;border-radius:50%;
+    background:url('https://i.ibb.co/7dRKQ642/Gemini-Generated-Image-555ns1555ns1555n.png') center/cover;
+    border:4px solid var(--panel);outline:2px solid #e6ebf2;box-shadow:var(--shadow-sm)
+  }
+  .hero-meta{display:flex;flex-direction:column;gap:4px}
+  .name{font-size:22px;font-weight:900;letter-spacing:.2px}
+  .loc{display:flex;align-items:center;gap:8px;color:#475569;font-size:14px}
+  .roles{font-size:15px;color:#334155}
+  .roles .fixed{color:#0b1220;font-weight:500}
+  .cursor{display:inline-block;width:1px;background:#0b1220;margin-left:2px;animation:blink 1s steps(1) infinite}
+  .roles #type{color:var(--g-600);font-weight:600}
+  @keyframes blink{50%{opacity:0}}
+  .cta{margin-left:auto}
+  .btn{
+    background: var(--btn);
+    color:#ffffff;font-weight:800;border:none;border-radius:999px;padding:10px 18px;cursor:pointer;transition:.2s;
+    box-shadow:var(--g-shadow)
+  }
+  .btn:hover{transform:translateY(-1px);background: var(--btn-hover);box-shadow:var(--shadow-lg)}
+
+  /* Overview */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .stat{
+    background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid var(--border);
+    border-radius:12px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)
+  }
+  .stat .big{
+    font-size:44px;font-weight:900;
+    background:linear-gradient(180deg,#0f172a, var(--g-600));
+    color:transparent;-webkit-background-clip:text;background-clip:text
+  }
+  .stat .sub{color:#4b5563;letter-spacing:.3px}
+  .stat::after{content:attr(data-water);position:absolute;right:8px;bottom:-10px;font-size:90px;font-weight:900;color:#1f293708;letter-spacing:-2px}
+
+  /* Items & hovers */
+  .item{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;
+    transition:.2s;box-shadow:var(--shadow-sm)
+  }
+
+.item .muted {
+  font-size: 13px;   /* or 12px if you want it smaller */
+  color: #000000;    /* matches your muted color */
+  font-weight: 400;  /* normal weight */
+}
+
+  .item h4{margin:0 0 6px 0;font-size:15px}
+  .item .meta{display:flex;gap:8px;color:#64748b;font-size:12px;margin-bottom:8px}
+  .item:hover{
+    transform:translateY(-2px);border-color:var(--g-200);
+    box-shadow:var(--g-shadow), inset 0 0 0 1px var(--g-200);background:#ffffff
+  }
+
+  /* Skills grid cards */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .skill-card{
+    background:linear-gradient(180deg,#ffffff,#fbfdff);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:var(--shadow-sm);
+    transition:.2s;
+    position:relative;overflow:hidden;z-index:1;
+  }
+  .skill-card:hover{
+    transform:translateY(-2px);
+    border-color:var(--g-200);
+    box-shadow:var(--g-shadow), inset 0 0 0 1px var(--g-200);
+  }
+  .skill-card::after{
+    content:"";position:absolute;left:0;bottom:0;width:100%;height:0;
+    background:linear-gradient(180deg, #bff0e5 0%, #a3ead8 100%);
+    opacity:.14;transition:height .35s cubic-bezier(.4,0,.2,1);z-index:2;
+  }
+  .skill-card:hover::after{height:100%;opacity:.18}
+
+  .skill-head{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;color:#0f172a;margin-bottom:6px}
+  .skill-head .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, #22c55e 0 50%, #16a34a 55% 100%);
+    box-shadow:0 0 0 4px #eaf7ef;
+  }
+  .skill-desc{color:#64748b;font-size:13px;margin-bottom:12px}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:#f6fbfa;
+    color:#0f172a;font-weight:400;font-size:12px;margin:6px 8px 0 0;transition:.2s
+  }
+  .chip:hover{transform:translateY(-1px);border-color:var(--g-200);background:var(--g-50);box-shadow:0 10px 22px rgba(12,111,95,.12), inset 0 0 0 1px var(--g-200)}
+
+  /* Certifications & language tags */
+  .tag{
+    display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:#f6fbfa;color:#0f172a;
+    border-radius:999px;padding:6px 10px;margin:6px 8px 0 0;font-size:12px;transition:.2s
+  }
+  .tag:hover{transform:translateY(-1px);border-color:var(--g-200);box-shadow:0 10px 22px rgba(12,111,95,.12), inset 0 0 0 1px var(--g-200); background:var(--g-50)}
+
+  .pill{
+    display:inline-block;padding:6px 12px;border-radius:999px;background:var(--g-50);border:1px solid var(--g-200);color:#0f172a;transition:.2s
+  }
+  .pill:hover{transform:translateY(-1px);border-color:var(--g-300);box-shadow:0 10px 22px rgba(12,111,95,.12), inset 0 0 0 1px var(--g-300)}
+
+  /* Availability table */
+  table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:center}
+  th{background:#f1f5f9;color:#334155;font-weight:700}
+  tr:last-child td{border-bottom:none}
+  td:first-child,th:first-child{text-align:left}
+  .ok{color:var(--good)} .no{color:var(--bad)}
+
+  /* Timeline + scroll effects */
+  .timeline{position:relative;margin-top:6px;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(var(--g-200),#e2e8f0)}
+  .t{
+    position:relative;margin:18px 0;padding:12px 14px;background:#ffffff;border:1px solid var(--border);border-radius:10px;
+    opacity:0;transform:translateX(12px);transition:opacity .5s ease, transform .5s ease;box-shadow:var(--shadow-sm)
+  }
+  .t::before{content:"";position:absolute;left:-13px;top:18px;width:10px;height:10px;border-radius:50%;
+    background:linear-gradient(180deg,var(--g-600),var(--g-300));box-shadow:0 0 0 4px #eef8f5}
+  .t.in-view{opacity:1;transform:translateX(0)}
+  .muted{color:var(--muted)}
+
+  /* Social icons (icon-only buttons) */
+  .socials{display:flex;flex-wrap:wrap;gap:10px}
+  .soc{
+    display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;
+    background:#ffffff;border:1px solid var(--border);border-radius:12px;transition:.2s;box-shadow:var(--shadow-sm)
+  }
+  .soc svg{width:22px;height:22px;transition:.2s}
+  .soc:hover{
+    transform:translateY(-2px);
+    border-color:var(--g-200);
+    background:var(--g-50);
+    box-shadow:0 10px 22px rgba(12,111,95,.12), inset 0 0 0 1px var(--g-200)
+  }
+  .soc:hover svg{fill:var(--g-600)}
+
+  /* ---------- Education (new) ---------- */
+  .edu-list{display:flex;flex-direction:column;gap:14px}
+  .edu-item{
+    display:flex;align-items:flex-start;gap:14px;
+    background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;
+    box-shadow:var(--shadow-sm);transition:.2s;
+  }
+  .edu-item:hover{border-color:var(--g-200);background:var(--g-50);box-shadow:var(--g-shadow), inset 0 0 0 1px var(--g-200)}
+  .edu-icon{
+    flex:0 0 48px;width:48px;height:48px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--g-50);border:1px solid var(--g-200);
+  }
+  .edu-icon svg{width:24px;height:24px;fill:var(--g-600)}
+  .edu-main{display:flex;flex-direction:column;gap:4px}
+  .edu-title{font-weight:800;color:#0f172a}
+  .edu-sub{color:#475569}
+  .edu-loc{color:#475569}
+  .edu-date{color:#64748b;font-weight:400;margin-top:6px;font-size:10px}
+
+  /* ---------- Certification Badges (new) ---------- */
+  .badge-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:14px;
+    margin-top:14px;
+  }
+  .badge-card{
+    background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;
+    text-align:center;box-shadow:var(--shadow-sm);transition:.2s;display:flex;flex-direction:column;align-items:center;
+  }
+  .badge-card:hover{border-color:var(--g-200);background:var(--g-50);box-shadow:var(--g-shadow), inset 0 0 0 1px var(--g-200)}
+  .badge-card img{
+    width:88px;height:88px;object-fit:contain;border-radius:10px;background:#fff;border:1px solid var(--border);
+  }
+  .badge-name{font-weight:800;color:#0f172a;margin-top:8px;font-size:12.5px}
+  .badge-issuer{color:#64748b;font-size:11.5px}
+
+  /* Overlay for mobile nav */
+  .overlay{
+    display:none; position:fixed; inset:0; background:rgba(15,23,42,.45);
+    backdrop-filter:saturate(120%) blur(2px);
+    z-index:100; opacity:0; transition:opacity .25s ease;
+  }
+  .overlay.show{display:block; opacity:1}
+
+  /* Mobile responsive */
+  @media (max-width: 980px){
+    .wrap{grid-template-columns:1fr; padding:14px;}
+    .sidebar{position:static;height:auto;}
+    .grid{grid-template-columns:1fr;}
+    .cta{margin-left:0;}
+    .hero-row{flex-direction:column;align-items:flex-start;gap:12px;}
+    .hamburger{display:flex !important;}
+    .sidebar .nav{
+      position:fixed; left:0; top:0; width:72vw; max-width:320px; height:100vh; background:var(--panel);
+      border-radius:0 16px 16px 0; box-shadow:2px 0 24px rgba(2,6,23,.15);
+      transform:translateX(-100%); transition:.3s; z-index:120; padding-top:60px;
+      border:1px solid var(--border);
+    }
+    .sidebar .nav.open{ transform:translateX(0) }
+    body.menu-open{ overflow:hidden }
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* Download Spacing */
+.downloads {
+  margin-bottom: 18px;
+}
+
+.bring-section {
+  position: relative;
+  background-image: url('images/bring.jpg'); /* <-- update path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Optional overlay for readability */
+}
+.bring-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.7); /* semi-transparent white overlay */
+  z-index: 0;
+}
+.bring-section > * {
+  position: relative;
+  z-index: 1;
+}
+footer {
+  padding: 18px 24px;
+}
+  @media (max-width: 600px){
+    body{font-size:15px}
+    .wrap{padding:6px}
+    .sidebar{gap:8px}
+    .brand-row{padding:7px 8px}
+    .nav{padding:4px}
+    .nav a{padding:8px 10px; font-size:15px}
+    .main{gap:12px}
+    .card{border-radius:10px}
+    .card.pad{padding:10px}
+    .hero-banner{height:120px}
+    .hero-row{flex-direction:column;align-items:flex-start;gap:10px;padding:10px}
+    .avatar{margin-top:-40px;width:70px;height:70px}
+    .hero-meta .name{font-size:18px}
+    .loc,.roles{font-size:12px}
+    .btn{padding:8px 14px;font-size:15px}
+    .grid{gap:10px}
+    .stat{padding:12px}
+    .stat .big{font-size:32px}
+    .item{padding:10px}
+    .item h4{font-size:14px}
+    .section-title{font-size:11px;margin-bottom:8px}
+    .tag,.pill{padding:5px 8px;font-size:11px}
+    table th, table td{padding:7px 6px;font-size:12px}
+    .timeline{padding-left:18px}
+    .t{padding:8px 10px}
+    footer{padding:12px 6px;font-size:13px}
+    .skills-grid{grid-template-columns:1fr;}
+  }
+
+  /* ================= Chatbot (compact, emerald-themed, avatar, form) ================ */
+  .cb-launcher{
+    position:fixed; right:18px; bottom:18px; width:50px; height:50px; border:none; cursor:pointer;
+    border-radius:14px; background:var(--btn); color:#fff; box-shadow:var(--g-shadow); display:flex;
+    align-items:center; justify-content:center; transition:.2s; z-index:999;
+  }
+  .cb-launcher:hover{ background:var(--btn-hover); transform:translateY(-1px) }
+  .cb-launcher svg{ width:22px; height:22px; fill:#fff }
+
+  .cb-window{
+    position:fixed; right:18px; bottom:76px; width:300px; max-width:calc(100vw - 24px);
+    background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-lg);
+    display:flex; flex-direction:column; overflow:hidden; z-index:1000;
+  }
+  .cb-header{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:8px 10px; background:var(--g-50); border-bottom:1px solid var(--g-200);
+  }
+  .cb-title{ font-weight:800; color:#0f172a; font-size:13.5px }
+  .cb-close{ background:transparent; border:none; cursor:pointer; padding:6px; border-radius:8px; line-height:0 }
+  .cb-close:hover{ background:var(--g-50) }
+  .cb-close svg{ width:18px; height:18px; stroke:#0f172a }
+
+  .cb-tabs{ display:flex; gap:6px; padding:8px 10px; border-bottom:1px solid var(--border); background:#fff }
+  .cb-tab{
+    flex:1; text-align:center; font-weight:700; font-size:12.5px; padding:8px 10px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--border); background:#fff; transition:.2s;
+  }
+  .cb-tab:hover{ background:var(--g-50); border-color:var(--g-200) }
+  .cb-tab.active{ background:var(--g-100); border-color:var(--g-200) }
+
+  .cb-body{
+    height:240px; overflow:auto; padding:10px; background:#fbfdff;
+    display:flex; flex-direction:column; gap:10px;
+  }
+
+  .cb-row{ display:flex; align-items:flex-end; gap:8px; }
+  .cb-avatar{
+    width:24px; height:24px; border-radius:50%;
+    background: radial-gradient(circle at 40% 30%, #c7fff2, #2d9c89);
+    border:1px solid var(--g-200);
+    flex:0 0 24px;
+  }
+  .cb-avatar.user{ background: linear-gradient(180deg,#0f172a,#334155); border-color:#e5e7eb }
+
+  .cb-msg{
+    max-width:80%; padding:8px 10px; border-radius:12px; font-size:13px; line-height:1.5; box-shadow:var(--shadow-sm);
+  }
+  .cb-bot{ background:#ffffff; border:1px solid var(--g-200); color:#0f172a }
+  .cb-user{ background:var(--g-600); color:#ffffff; border:1px solid transparent; margin-left:auto }
+  .cb-time{ display:block; opacity:.6; font-size:10.5px; margin-top:4px }
+
+  .cb-inputbar{ display:flex; gap:8px; padding:8px; border-top:1px solid var(--border); background:#fff }
+  .cb-input{
+    flex:1; border:1px solid var(--border); border-radius:999px; padding:9px 12px; font-size:13.5px;
+    background:#fff; color:#0f172a; outline:none; transition:.2s;
+  }
+  .cb-input:focus{ border-color:var(--g-300); box-shadow:0 0 0 3px var(--g-50) }
+  .cb-send{
+    width:38px; border:none; border-radius:12px; background:var(--g-600); color:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:.2s;
+  }
+  .cb-send:hover{ background:var(--btn-hover) }
+  .cb-send svg{ width:18px; height:18px; fill:#fff }
+
+  .cb-form{ display:none; padding:12px; background:#fff; }
+  .cb-form.active{ display:block }
+  .cb-field{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+  .cb-field label{ font-size:12px; font-weight:700; color:#334155 }
+  .cb-input2{
+    border:1px solid var(--border); border-radius:10px; padding:9px 10px; font-size:13.5px; outline:none; transition:.2s; background:#fff; color:#0f172a;
+  }
+  .cb-input2:focus{ border-color:var(--g-300); box-shadow:0 0 0 3px var(--g-50) }
+  .cb-submit{
+    width:100%; border:none; border-radius:10px; padding:10px 12px; background:var(--g-600); color:#fff; font-weight:800; cursor:pointer; transition:.2s;
+  }
+  .cb-submit:hover{ background:var(--btn-hover) }
+  .cb-note{ font-size:11.5px; color:#64748b; margin-top:6px }
+
+  @media (max-width:600px){
+    .cb-window{ right:12px; left:12px; width:auto; bottom:70px }
+    .cb-body{ height:46vh }
+  }
+
+  @media (max-width: 980px) {
+  .card {
+    opacity: 0.5;
+    transform: translateY(40px) scale(0.98);
+    transition: transform 0.6s cubic-bezier(.4,0,.2,1), opacity 0.6s;
+  }
+  .card.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
+  .card:active {
+    box-shadow: 0 8px 24px rgba(12,111,95,.18), 0 0 0 2px var(--g-200);
+    transform: scale(0.97);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Overlay for mobile menu -->
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+
+<div class="wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="dots" aria-hidden="true"></div>
+      <a href="#top" class="brand-title" aria-label="Go to main page">kelvinbenson.com</a>
+      <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <ul class="nav" id="sidebarNav">
+      <li><a href="#summary">Professional Summary</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#work">Work History</a></li>
+      <li><a href="#edu">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#codeskills">What I bring</a></li>
+      <li><a href="#certs">Certification</a></li>
+      <li><a href="#lang">Languages</a></li>
+      <li><a href="#avail">Work Availability</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- HERO -->
+    <section class="card hero" id="top">
+      <div class="hero-banner"></div>
+      <div class="hero-row">
+        <div class="avatar" title="Kelvin Benson"></div>
+        <div class="hero-meta">
+          <div class="name">KELVIN BENSON</div>
+          <div class="roles">
+            <span class="fixed">Agile Coach • </span>
+            <span id="type"></span><span class="cursor" aria-hidden="true"></span>
+          </div>
+          <div class="loc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.686 7-11a7 7 0 1 0-14 0c0 5.314 7 11 7 11z" stroke="#64748b" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="#64748b" stroke-width="1.5"/></svg>
+            <span>Emmelshausen • Deutschland</span>
+          </div>
+        </div>
+        <div class="cta"><a class="btn" href="#contact">CONTACT ME</a></div>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="card pad" id="summary">
+      <div class="section-title"><span class="bar"></span> Professional Summary</div>
+      <p class="muted" style="max-width:80ch">
+        Agile Coach, Scrum Master, and Enterprise Agilist focused on driving business transformation and high-performing teams. Skilled at bridging strategy and execution, fostering collaboration, and enabling continuous improvement. Recognized for adaptability, problem-solving, and creating environments where innovation and value delivery thrive.
+      </p>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="grid" id="overview" aria-label="overview">
+      <div class="stat" data-water="3">
+        <div class="big">3+</div>
+        <div class="sub">Years of Professional Experience</div>
+      </div>
+      <div class="stat" data-water="7">
+        <div class="big">7</div>
+        <div class="sub">Certifications</div>
+      </div>
+    </section>
+
+    <!-- RECENT WORK HISTORY -->
+    <section class="card pad" id="work">
+      <div class="section-title"><span class="bar"></span>Recent Work History</div>
+      <div class="item hoverable">
+        <h4>Agile Project Manager / Scrum Master</h4>
+        <div class="meta"><span>Vawick Consulting </span> • <span>On-Site</span> • <span>01/2023 – Present</span></div>
+        <div class="muted">I drive Agile delivery for SaaS product teams by blending coaching, facilitation, and technical insight. Through Agile, Scrum, and DevOps practices, I empower teams to collaborate effectively, deliver with agility, and continuously improve. With a focus on optimizing backlogs, workflows, and deployment pipelines, I help transform ideas into impactful solutions that align with business goals and create lasting value.</div>
+        
+    </div>
+      <div class="item hoverable">
+        <h4>Project Manager</h4>
+        <div class="meta"><span>PS Trade GmbH</span> • <span>Nassau</span> • <span>11/2019 – 07/2022</span></div>
+        <div class="muted">I led business concept development and coordinated cross-departmental projects, ensuring strategic alignment across teams. By managing digital and social media initiatives, I connected execution with business objectives while driving measurable impact. I developed forecasts, tracked KPIs, and enhanced project reporting in close collaboration with leadership, strengthening visibility and enabling data-driven decision-making.</div>
+      </div>
+      <div class="item hoverable">
+        <h4>Digital Marketing Intern</h4>
+        <div class="meta"><span>RMB Energy GmbH</span> • <span>Germany</span> • <span>07/2019 – 10/2019</span></div>
+        <div class="muted">I designed and implemented a comprehensive digital marketing strategy to strengthen online presence and brand positioning. By leveraging Google Analytics, I uncovered performance insights and guided data-driven improvements across campaigns. Through targeted SEO and keyword research, I enhanced search visibility while contributing to content planning and coordinated marketing initiatives that amplified reach and engagement.</div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="card pad" id="edu">
+      <div class="section-title"><span class="bar"></span> Education</div>
+
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l10 4-10 4L2 7l10-4zm0 6l6 2.4V14c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-2.6L12 9z"/></svg>
+          </div>
+          <div class="edu-main">
+            <div class="edu-title">Bachelor of Arts (BA) – International Business</div>
+            <div class="edu-sub">CBS International Business School</div>
+            <div class="edu-loc">Cologne, Germany</div>
+            <div class="edu-date">August 2016 - August 2019</div>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l10 4-10 4L2 7l10-4zm0 6l6 2.4V14c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-2.6L12 9z"/></svg>
+          </div>
+          <div class="edu-main">
+            <div class="edu-title">BA. – Digital Marketing (Exchange Program)</div>
+            <div class="edu-sub">TBS Education</div>
+            <div class="edu-loc">Barcelona, Spain</div>
+            <div class="edu-date">June 2018 - Dec 2018</div>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l10 4-10 4L2 7l10-4zm0 6l6 2.4V14c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-2.6L12 9z"/></svg>
+          </div>
+          <div class="edu-main">
+            <div class="edu-title">Galileo Master Certificate (Project Management)</div>
+            <div class="edu-sub">Renewable Energy Institute (UK)</div>
+            <div class="edu-loc">Remote</div>
+            <div class="edu-date">October 2020 - March 2021</div>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l10 4-10 4L2 7l10-4zm0 6l6 2.4V14c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-2.6L12 9z"/></svg>
+          </div>
+          <div class="edu-main">
+            <div class="edu-title">Bachelor of Science(B.SC) – Economics</div>
+            <div class="edu-sub">University of Ibadan</div>
+            <div class="edu-loc">Nigeria</div>
+            <div class="edu-date">May 2003 - July 2007</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS (CARD GRID) -->
+    <section class="card pad" id="skills">
+      <div class="section-title"><span class="bar"></span> Skills</div>
+
+      <div class="skills-grid">
+        <!-- Agile Coaching -->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Agile Coaching</div>
+          
+          <div>
+            <span class="chip">Scrum</span>
+            <span class="chip">Kanban</span>
+            <span class="chip">SAFe</span>
+            <span class="chip">Lean Portfolio Management</span>
+            <span class="chip">Team Facilitation</span>
+            <span class="chip">Continous Improvement</span>
+            <span class="chip">Servant Leadership</span>
+          </div>
+        </div>
+
+        <!-- Product Delivery -->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Product Delivery</div>
+          
+          <div>
+            <span class="chip">Backlog Refinement</span>
+            <span class="chip">Value Stream Mapping</span>
+            <span class="chip">Roadmapping</span>
+            <span class="chip">SaaS Product Lifecycle Management</span>
+            <span class="chip">Evidence-based Management</span>
+          </div>
+        </div>
+
+        <!-- Change Enablement -->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Change Enablement</div>
+          
+          <div>
+            <span class="chip">Change Management</span>
+            <span class="chip">Organizational Agility</span>
+            <span class="chip">Scaling Agile Practices</span>
+            <span class="chip">Process Improvement</span>
+            <span class="chip">Business Agility Enablement</span>
+          </div>
+        </div>
+
+        <!-- Stakeholder Collaboration-->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Stakeholder Collaboration</div>
+          
+          <div>
+            <span class="chip">Stakeholder Management</span>
+            <span class="chip">Conflict Resolution</span>
+            <span class="chip">Visual Collaboration Tools (Jira, Confluence, Miro, Trello)</span>
+            <span class="chip">Cross-functional Team Alignment</span>
+            
+          </div>
+        </div>
+
+        <!-- Technical Practices -->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Technical Practices</div>
+          
+          <div>
+            <span class="chip">DevOps Awareness</span>
+            <span class="chip">Deployment Workflows</span>
+            <span class="chip">API Integration</span>
+            <span class="chip">Python & JavaScript (basic)</span>
+            <span class="chip">Git/GitHub</span>
+            <span class="chip">Metrics & Reporting (Velocity, Burndown, KPIs)</span>
+          </div>
+        </div>
+
+
+        <!-- Strategic Execution -->
+        <div class="skill-card">
+          <div class="skill-head"><span class="dot"></span> Strategic Execution</div>
+          
+          <div>
+            <span class="chip">Coaching & Mentoring</span>
+            <span class="chip">Adaptability</span>
+            <span class="chip">Risk Management</span>
+            <span class="chip">Innovation Enablement</span>
+            <span class="chip">Kaizen</span>
+            <span class="chip">OKR Management</span>
+            <span class="chip">Portfolio Alignment</span>
+          </div>
+        </div>
+
+    </section>
+
+    <!-- What I Bring -->
+    <section class="card pad bring-section" id="codeskills">
+      <div class="section-title"><span class="bar"></span> What I Bring</div>
+      <p class="muted">
+        I bring a servant-leadership mindset that empowers teams and aligns stakeholders around shared goals. With expertise in Agile frameworks and SaaS delivery, I bridge strategy with execution to ensure meaningful business outcomes. My approach combines coaching, collaboration, and technical insight, creating environments where innovation and continuous improvement thrive.
+      </p>
+    </section>
+
+    <!-- CERTS -->
+    <section class="card pad" id="certs">
+
+      <div class="section-title"><span class="bar"></span> Certification</div>
+
+      <!-- Badge gallery (sample badges) -->
+      <div class="badge-grid" aria-label="Certification Badges">
+        <a class="badge-card" href="https://www.credly.com/badges/0dee3faf-2f15-4d82-a849-95f534f48342" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/safe.jpg" alt="SAFe Scrum Master badge (sample)">
+          <div class="badge-name">SAFe® 6.0 Scrum Master</div>
+          <div class="badge-issuer">Scaled Agile </div>
+        </a>
+
+        <a class="badge-card" href="https://www.icagile.com/verify-credentials" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/icp.png" alt="ICAgile ICP-ACC badge">
+          <div class="badge-name">ICP-ACC</div>
+          <div class="badge-issuer">ICAgile</div>
+        </a>
+
+        <a class="badge-card" href="https://www.credly.com/badges/70890a79-adcd-42d2-b7c7-f97c52f37152" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/psm.jpg" alt="PSM I badge">
+          <div class="badge-name">PSM I</div>
+          <div class="badge-issuer">Scrum.org </div>
+        </a>
+
+        <a class="badge-card" href="https://www.credly.com/badges/5d31400a-571c-480b-812a-9041d833f96c" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/pspo.jpg" alt="PSPO I badge">
+          <div class="badge-name">PSPO I</div>
+          <div class="badge-issuer">Scrum.org</div>
+        </a>
+
+        <a class="badge-card" href="https://www.scrumalliance.org/members/search" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/cspo.png" alt="CSPO badge">
+          <div class="badge-name">CSPO</div>
+          <div class="badge-issuer">Scrum Alliance</div>
+        </a>
+
+        <a class="badge-card" href="https://mylogin.exin.nl/?CERTIFICATENUMBER=6409477.20836974&LASTNAME=Benson&MODULEID=630589&PAGEID=0&SID=0c4ad473205f9f318f448907c7fd38cd&TOOLNAME=CertificateCheckTool" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/exin.jpg" alt="ASM-EXIN badge">
+          <div class="badge-name">ASM-EXIN</div>
+          <div class="badge-issuer">EXIN</div>
+        </a>
+
+        <a class="badge-card" href="https://www.iapm.net/en/start/" target="_blank" rel="noreferrer noopener" title="Open verification">
+          <img src="images/capm.jpg" alt="CAPM-IAPM badge">
+          <div class="badge-name">CAPM-IAPM</div>
+          <div class="badge-issuer">IAPM</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section class="card pad" id="lang">
+      <div class="section-title"><span class="bar"></span> Languages</div>
+      <div class="row">
+        <span class="pill">English</span>
+        <span class="pill">German (B1)</span>
+      </div>
+    </section>
+
+    
+
+    <!-- AVAILABILITY -->
+    <section class="card pad" id="avail">
+      <div class="section-title"><span class="bar"></span> Work Availability</div>
+      <table>
+        <thead>
+          <tr>
+            <th> </th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Morning</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="no">×</td><td class="no">×</td></tr>
+          <tr><td>Afternoon</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="no">×</td><td class="no">×</td></tr>
+          <tr><td>Evening</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="no">×</td><td class="no">×</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="card pad" id="contact">
+      <div class="section-title"><span class="bar"></span> Contact</div>
+
+      <!-- Resume downloads -->
+      <div class="downloads" aria-label="Download Resume">
+        <a class="pill" href="Resume/Resume_english.pdf" download>Download Resume EN</a>
+        <a class="pill" href="Resume/Resume_deutsch.pdf" download>Download Resume DE</a>
+      </div>
+
+      <!-- Email & Phone -->
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+        <a href="mailto:hello@kelvinbenson.com" style="display:flex;align-items:center;gap:8px;color:#64748b;font-weight:500;">
+          <!-- Email icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" stroke="#0c6f5f" stroke-width="1.7"/><path d="M4 7l8 6 8-6" stroke="#0c6f5f" stroke-width="1.7" fill="none"/></svg>
+          hello@kelvinbenson.com
+        </a>
+        <a href="tel:+491234567890" style="display:flex;align-items:center;gap:8px;color:#64748b;font-weight:500;">
+          <!-- Phone icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <path d="M22 16.92V21a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h4.09a1 1 0 0 1 1 .75l1.13 5.06a1 1 0 0 1-.29 1l-2.2 2.2a16 16 0 0 0 6.29 6.29l2.2-2.2a1 1 0 0 1 1-.29l5.06 1.13a1 1 0 0 1 .75 1z" stroke="#0c6f5f" stroke-width="1.7" fill="none"/>
+</svg>
+          +49 123 4567890
+        </a>
+      </div>
+
+      <!-- Social Links -->
+      <div class="socials">
+        <a class="soc ln" href="https://www.linkedin.com/in/kelvinbenson" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="#1f2937" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8 8.5h3.8v2h.05c.53-.96 1.84-2 3.8-2 4.06 0 4.8 2.67 4.8 6.13V23h-4v-5.47c0-1.3-.02-2.98-1.82-2.98-1.82 0-2.1 1.42-2.1 2.88V23H8V8.5z"/></svg>
+        </a>
+        <a class="soc medium" href="https://medium.com/@yourusername" target="_blank" rel="noreferrer noopener" aria-label="Medium" title="Medium">
+  <svg viewBox="0 0 24 24" fill="#1f2937" aria-hidden="true">
+    <g>
+      <ellipse cx="5.5" cy="12" rx="4.5" ry="7"/>
+      <ellipse cx="17" cy="12" rx="2" ry="7"/>
+      <ellipse cx="21" cy="12" rx="1" ry="7"/>
+    </g>
+  </svg>
+</a>
+        <a class="soc gh" href="https://github.com/kbteck" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="#1f2937" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.91 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.81 5.61-5.49 5.91.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="rule" style="height:1px;background:linear-gradient(90deg,transparent,#e6ebf2,transparent);margin-bottom:12px"></div>
+  
+  <div style="text-align:center; color:#000000;">
+    © 2025 Kelvin Benson &nbsp;•&nbsp; Code &amp; Coffee
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align:-3px;" aria-hidden="true">
+      <path d="M3 19a8 8 0 0 0 16 0V8H3v11z" stroke="#a16207" stroke-width="2" fill="#fff"/>
+      <path d="M21 10a2 2 0 0 1-2 2" stroke="#a16207" stroke-width="2" fill="none"/>
+      <path d="M8 6c0-1.5 2-2 2-4" stroke="#a16207" stroke-width="2" fill="none"/>
+      <path d="M12 6c0-1.5 2-2 2-4" stroke="#a16207" stroke-width="2" fill="none"/>
+    </svg>
+    &nbsp;from Emmelshausen
+  </div>
+</footer>
+
+<!-- ================= Chatbot widget (HTML) ================= -->
+<button class="cb-launcher" id="cbLauncher" aria-label="Open chat" aria-expanded="false">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4.5A2.5 2.5 0 0 1 4.5 2h15A2.5 2.5 0 0 1 22 4.5v9A2.5 2.5 0 0 1 19.5 16H8l-4.5 4v-4.5A2.5 2.5 0 0 1 2 13.5v-9Z"/></svg>
+</button>
+
+<div class="cb-window" id="cbWindow" role="dialog" aria-labelledby="cbTitle" aria-modal="true" hidden>
+  <div class="cb-header">
+    <div class="cb-title" id="cbTitle">Chat with Kelvin’s Assistant</div>
+    <button type="button" class="cb-close" id="cbClose" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="cb-tabs">
+    <button type="button" class="cb-tab active" id="tabChat">Chat</button>
+    <button type="button" class="cb-tab" id="tabForm">Message</button>
+  </div>
+
+  <div class="cb-body" id="cbBody" aria-live="polite"></div>
+
+  <form class="cb-form" id="cbContactForm" action="https://formspree.io/f/your-id-here" method="POST" novalidate>
+    <div class="cb-field">
+      <label for="cbName">Your name</label>
+      <input id="cbName" name="name" class="cb-input2" type="text" placeholder="Jane Doe" required>
+    </div>
+    <div class="cb-field">
+      <label for="cbEmail">Email</label>
+      <input id="cbEmail" name="_replyto" class="cb-input2" type="email" placeholder="you@example.com" required>
+    </div>
+    <div class="cb-field">
+      <label for="cbMsg">Message</label>
+      <textarea id="cbMsg" name="message" rows="3" class="cb-input2" placeholder="Hello Kelvin…" required></textarea>
+    </div>
+    <input type="hidden" name="source" value="Resume Chatbot" />
+    <button class="cb-submit" type="submit">Send message</button>
+    <div class="cb-note">Powered by Formspree. We’ll email your message to Kelvin.</div>
+  </form>
+
+  <form class="cb-inputbar" id="cbForm">
+    <input id="cbInput" class="cb-input" type="text" placeholder="Ask about skills, certs, education…" aria-label="Your message" autocomplete="off" />
+    <button class="cb-send" aria-label="Send message" type="submit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l18-8-8 18-2-7-8-3z"/></svg>
+    </button>
+  </form>
+</div>
+
+<script>
+  /* ======= Site JS (navigation, typing, timeline) ======= */
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('sidebarNav');
+    const hamb = document.getElementById('navToggle');
+    const overlay = document.getElementById('overlay');
+
+    const isMobile = () => window.matchMedia('(max-width: 980px)').matches;
+
+    function openMenu(){
+      nav.classList.add('open');
+      overlay.classList.add('show');
+      document.body.classList.add('menu-open');
+      hamb.setAttribute('aria-expanded','true');
+    }
+    function closeMenu(){
+      nav.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.classList.remove('menu-open');
+      hamb.setAttribute('aria-expanded','false');
+    }
+
+    hamb.addEventListener('click', () => {
+      nav.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.nav a').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href');
+        if(id && id.startsWith('#')){
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+          if(isMobile()) closeMenu();
+        }
+      });
+    });
+
+    const links=[...document.querySelectorAll('.nav a')];
+    const map=new Map(links.map(l=>[document.querySelector(l.getAttribute('href')), l]));
+    const spy=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        const link=map.get(entry.target);
+        if(entry.isIntersecting){ links.forEach(x=>x.classList.remove('active')); link?.classList.add('active'); }
+      });
+    },{rootMargin:'-40% 0px -55% 0px', threshold:[0,1]});
+    map.forEach((_,section)=>section && spy.observe(section));
+
+    const words = ["Scrum Master","Enterprise Agilist","Problem Solver"];
+    const el = document.getElementById('type');
+    let wi = 0, ci = 0, typing = true;
+    (function tick(){
+      const word = words[wi];
+      if(typing){
+        ci++; el.textContent = word.slice(0, ci);
+        if(ci === word.length){ typing = false; setTimeout(tick, 900); return; }
+      } else {
+        ci--; el.textContent = word.slice(0, ci);
+        if(ci === 0){ typing = true; wi = (wi+1)%words.length; }
+      }
+      setTimeout(tick, typing ? 80 : 40);
+    })();
+
+    const items = document.querySelectorAll('.timeline .t');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach((e)=>{
+        if(e.isIntersecting){
+          setTimeout(()=> e.target.classList.add('in-view'), e.target.dataset.delay || 0);
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.15});
+    items.forEach((node, idx)=>{ node.dataset.delay = idx*120; io.observe(node); });
+
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', ()=>{ if(!isMobile()) closeMenu(); });
+    document.addEventListener('click', (e)=>{
+      if(!isMobile()) return;
+      const withinNav = nav.contains(e.target);
+      const onHamb = hamb.contains(e.target);
+      const onOverlay = overlay.contains(e.target);
+      if(!withinNav && !onHamb && !onOverlay && nav.classList.contains('open')){
+        closeMenu();
+      }
+    });
+  });
+
+  /* ========= Chatbot knowledge base (from your JSON) ========= */
+  window.KB_JSON = {
+    "version":"1.0","owner":"Kelvin Benson","last_updated":"2025-09-07","timezone":"Europe/Berlin",
+    "schema":{"item":{"id":"string","category":"string","question":"string","answer":"string","aliases":["string"],"tags":["string"]}},
+    "faqs":[
+      {"id":"gen-001","category":"General","question":"Who is Kelvin Benson?","answer":"Kelvin Benson is a certified Agile Project Manager, Scrum Master, and Agile Coach. He coaches teams, delivers Agile training, and leads software/SaaS initiatives.","aliases":["Tell me about Kelvin","Who is Kelvin?","Kelvin Benson bio"],"tags":["profile","about","bio"]},
+      {"id":"gen-002","category":"General","question":"Where is Kelvin based?","answer":"Germany. He works remotely with international teams and is open to hybrid/on-site within Germany.","aliases":["Kelvin location","Where does Kelvin live?","Country of residence"],"tags":["location","availability"]},
+      {"id":"gen-003","category":"General","question":"What is Kelvin’s current role?","answer":"Agile Project Manager, currently at Vawick Consulting;","aliases":["Current position","What does Kelvin do?"],"tags":["role","work"]},
+      {"id":"exp-001","category":"Experience","question":"How many years of experience does Kelvin have?","answer":"3+ years of professional experience across Agile project management, Scrum mastery, and leading software teams—combining freelance leadership and company building.","aliases":["Years of experience","Experience length","Work experience"],"tags":["experience","tenure"]},
+      {"id":"exp-002","category":"Experience","question":"What is Kelvin’s leadership style?","answer":"Servant leadership with a coaching mindset—facilitation, empowerment, continuous improvement, and outcome focus.","aliases":["Leadership style","How does Kelvin lead?"],"tags":["leadership","coaching"]},
+      {"id":"cert-001","category":"Certifications","question":"Which Agile certifications does Kelvin hold?","answer":"SAFe® 6.0 Scrum Master; ICP-ACC; PSM I; PSPO I; CSPO; ASM-EXIN; CAPM-IAPM; Galileo Master Certificate in Project Management for Renewable Energy.","aliases":["List certifications","Kelvin’s certs","Agile certifications"],"tags":["certifications","agile","safe","scrum"]},
+      {"id":"cert-002","category":"Certifications","question":"Is Kelvin licensed to train Agile/Scrum?","answer":"Yes—he delivers non-certification Agile training, workshops, and coaching programs.","aliases":["Can Kelvin train?","Training license"],"tags":["training","coaching"]},
+      {"id":"edu-001","category":"Education","question":"Does Kelvin have university degrees?","answer":"Yes—two university degrees, including one from a German university.","aliases":["Education","Degrees"],"tags":["education","background"]},
+      {"id":"skills-001","category":"Skills","question":"What Agile frameworks does Kelvin use?","answer":"Scrum, Kanban, and SAFe.","aliases":["Frameworks","Agile methods"],"tags":["agile","frameworks"]},
+      {"id":"skills-002","category":"Skills","question":"What are Kelvin’s core competencies?","answer":"Stakeholder management, team facilitation, coaching & mentoring, problem-solving, adaptability, risk management, and metrics/reporting.","aliases":["Core strengths","Key competencies"],"tags":["competencies","soft-skills"]},
+      {"id":"skills-003","category":"Skills","question":"What tools does Kelvin use?","answer":"Jira, Confluence, Trello, Miro, Git/GitHub; hosting/deployment with providers like Netlify and a Hostinger VPS.","aliases":["Toolchain","Project tools"],"tags":["tools","jira","miro","git"]},
+      {"id":"skills-004","category":"Skills","question":"What technical skills does Kelvin have?","answer":"API integration, deployment workflows, basic Python/JavaScript, and version control (Git/GitHub).","aliases":["Technical stack","Tech skills"],"tags":["technical","api","python","javascript","git"]},
+      {"id":"delivery-001","category":"Delivery","question":"What delivery practices does Kelvin lead?","answer":"Sprint planning, backlog refinement, PI planning, release & increment planning, risk management, impediment removal, change management, and KPI reporting (velocity, burndown, etc.).","aliases":["Delivery capabilities","Agile delivery"],"tags":["delivery","planning","kpis"]},
+      {"id":"company-001","category":"Vawick Consulting UG","question":"What is Vawick Consulting UG?","answer":"A German UG founded by Kelvin in 2024, focused on software consulting and building SaaS products.","aliases":["About Vawick","Vawick overview"],"tags":["company","ug","germany"]},
+      {"id":"company-002","category":"Vawick Consulting UG","question":"Does Vawick have employees?","answer":"Vawick collaborates with a remote network of ~10 freelancers.","aliases":["Team size","Employees"],"tags":["team","freelancers"]},
+      {"id":"products-001","category":"Products","question":"What products is Kelvin building?","answer":"Ratio (energy management for Germany), EcoTrack Pro (sustainable supply chain/ESG compliance), Herbify (plant identification app), Fisher (AI B2B lead gen), and PowerSell (sales intelligence).","aliases":["Product list","SaaS portfolio"],"tags":["products","saas","energy","sustainability","ai"]},
+      {"id":"products-002","category":"Products","question":"What is Ratio?","answer":"An energy consumption management platform for households, businesses, and providers in Germany—real-time tracking, AI insights, cost forecasting, billing integration, and sustainability features.","aliases":["About Ratio","Ratio app"],"tags":["ratio","energy","germany","saas"]},
+      {"id":"products-003","category":"Products","question":"What is EcoTrack Pro?","answer":"A white-label SaaS for sustainable supply-chain management that helps EU businesses comply with CSRD/EU Taxonomy—tracking, managing, and reporting environmental impact.","aliases":["EcoTrack overview","Supply chain SaaS"],"tags":["ecotrack","sustainability","csrd","eu"]},
+      {"id":"availability-001","category":"Availability","question":"Is Kelvin available for work?","answer":"Yes—open to full-time, contract, or consulting roles in Agile Coaching, Scrum Mastery, and Agile Project Management.","aliases":["Hiring status","Available to start"],"tags":["availability","hiring"]},
+      {"id":"availability-002","category":"Availability","question":"What work arrangements does Kelvin accept?","answer":"Remote, hybrid, or on-site within Germany and internationally.","aliases":["Work mode","Remote or on-site"],"tags":["remote","hybrid","onsite"]},
+      {"id":"availability-003","category":"Availability","question":"When can Kelvin start?","answer":"Typically within standard notice periods for Germany; project and coaching engagements can often start sooner by agreement.","aliases":["Start date","Earliest availability"],"tags":["start","notice"]},
+      {"id":"contact-001","category":"Contact","question":"How can we contact Kelvin?","answer":"Via his website (kelvinbenson.com) for inquiries/booking, or through his professional email on the same domain.","aliases":["Contact details","Reach Kelvin"],"tags":["contact","website","email"]},
+      {"id":"contact-002","category":"Contact","question":"Does Kelvin use Calendly for bookings?","answer":"Yes—he offers schedule links via kelvinbenson.com for discovery calls, coaching, and workshops.","aliases":["Book a call","Schedule meeting"],"tags":["booking","calendly"]},
+      {"id":"coaching-001","category":"Coaching","question":"What coaching and training services does Kelvin provide?","answer":"Enterprise Agile coaching, non-certification Agile training, 1-on-1 and group coaching, corporate workshops, webinars, online courses, and mentorship bootcamps.","aliases":["Coaching services","Training offerings"],"tags":["coaching","training","workshops"]},
+      {"id":"coaching-002","category":"Coaching","question":"Who are Kelvin’s ideal clients?","answer":"Tech startups, enterprise PMs, and energy-sector teams adopting Agile and SAFe.","aliases":["Target clients","Who Kelvin helps"],"tags":["clients","target","safe"]},
+      {"id":"content-001","category":"Content","question":"Does Kelvin publish articles?","answer":"Yes—through his AgileIQ content platform and personal site, focusing on Agile practices, software delivery, and professional development.","aliases":["Blog","Publications"],"tags":["content","blog","agileiq"]},
+      {"id":"jobs-001","category":"Job Search","question":"What roles is Kelvin pursuing?","answer":"Agile Coach, Scrum Master, Agile Project Manager, Release Train Engineer, and roles in SAFe contexts.","aliases":["Target roles","Job preferences"],"tags":["jobs","roles","safe"]},
+      {"id":"jobs-002","category":"Job Search","question":"How actively is Kelvin applying?","answer":"He runs a structured search, aiming for 100–200 high-quality applications across relevant companies using Agile/SAFe.","aliases":["Application volume","Job hunt intensity"],"tags":["applications","strategy"]},
+      {"id":"industry-001","category":"Industry Focus","question":"Which industries does Kelvin target?","answer":"Technology, SaaS, energy, consulting, and enterprises practicing Agile/SAFe at scale.","aliases":["Industry focus","Sectors"],"tags":["industries","focus"]},
+      {"id":"values-001","category":"Ways of Working","question":"How does Kelvin drive team performance?","answer":"By cultivating psychological safety, clear goals/DoD, transparent metrics, and continuous improvement via regular retros and experiments.","aliases":["Team performance","High-performing teams"],"tags":["teams","performance","retro"]},
+      {"id":"values-002","category":"Ways of Working","question":"How does Kelvin handle impediments and risk?","answer":"Early escalation, visible impediment boards, dependency mapping, and risk-based planning integrated with PI/iteration goals.","aliases":["Impediment removal","Risk management approach"],"tags":["risk","impediments","planning"]},
+      {"id":"presence-001","category":"Digital Presence","question":"Where can we learn more about Kelvin?","answer":"kelvinbenson.com hosts services, resources, and booking; he’s also active on LinkedIn for professional updates.","aliases":["Online presence","Web links"],"tags":["website","linkedin","presence"]}
+    ]};
+
+  /* ========= Chatbot (open/close + semantic matcher using KB_JSON) ========= */
+  (function(){
+    const launcher = document.getElementById('cbLauncher');
+    const win = document.getElementById('cbWindow');
+    const closeBtn = document.getElementById('cbClose');
+    const body = document.getElementById('cbBody');
+    const form = document.getElementById('cbForm');
+    const input = document.getElementById('cbInput');
+    const tabChat = document.getElementById('tabChat');
+    const tabForm = document.getElementById('tabForm');
+    const contactForm = document.getElementById('cbContactForm');
+
+    function openChat(){ win.hidden=false; win.style.display='flex'; launcher.setAttribute('aria-expanded','true'); setTimeout(()=>input&&input.focus(),0); }
+    function closeChat(){ win.hidden=true; win.style.display='none'; launcher.setAttribute('aria-expanded','false'); }
+
+    closeBtn.addEventListener('click',(e)=>{ e.preventDefault(); e.stopPropagation(); closeChat(); });
+    launcher.addEventListener('click',(e)=>{ e.preventDefault(); (win.hidden||win.style.display==='none')?openChat():closeChat(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'&&!win.hidden) closeChat(); });
+
+    function activateChat(){ tabChat.classList.add('active'); tabForm.classList.remove('active'); body.style.display='flex'; contactForm.classList.remove('active'); form.style.display='flex'; }
+    function activateForm(){ tabForm.classList.add('active'); tabChat.classList.remove('active'); body.style.display='none'; contactForm.classList.add('active'); form.style.display='none'; }
+    tabChat.addEventListener('click',activateChat); tabForm.addEventListener('click',activateForm);
+
+    function now(){ return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+    function row(text, who='bot'){
+      const wrap=document.createElement('div'); wrap.className='cb-row';
+      const avatar=document.createElement('div'); avatar.className='cb-avatar'+(who==='user'?' user':'');
+      const bubble=document.createElement('div'); bubble.className='cb-msg '+(who==='user'?'cb-user':'cb-bot');
+      bubble.innerHTML=text+`<span class="cb-time">${now()}</span>`;
+      if(who==='user'){ bubble.style.marginLeft='auto'; wrap.appendChild(bubble); wrap.appendChild(avatar); }
+      else { wrap.appendChild(avatar); wrap.appendChild(bubble); }
+      body.appendChild(wrap); body.scrollTop=body.scrollHeight;
+    }
+
+    /* ---------- Semantic matcher (TF-IDF + cosine) ---------- */
+    const docs = (window.KB_JSON?.faqs || []).map(f => {
+      const text = [f.question, f.answer, ...(f.aliases||[]), ...(f.tags||[])].join(' ').toLowerCase();
+      return { id:f.id, text, answer:f.answer, tags:f.tags||[], q:f.question };
+    });
+
+    const STOP = new Set("the a an and of in to for on at with from into over as by about this that those these is are was were be been being have has had it its it's your you're you we us our their there here how what when where who which".split(' '));
+    const tokenize = s => (s||'').toLowerCase().replace(/[^a-z0-9äöüß+./\- ]/g,' ').split(/\s+/).filter(w=>w && !STOP.has(w));
+
+    const termDocFreq = {};
+    const docTokens = docs.map(d=>{
+      const tks = tokenize(d.text);
+      const unique = new Set(tks);
+      unique.forEach(w => termDocFreq[w] = (termDocFreq[w]||0)+1);
+      return tks;
+    });
+
+    const N = Math.max(1, docs.length);
+    const idf = w => Math.log(1 + N / ((termDocFreq[w]||0)+1));
+
+    function vectorize(tokens){
+      const tf = {};
+      tokens.forEach(w => tf[w]=(tf[w]||0)+1);
+      const vec = {};
+      Object.keys(tf).forEach(w => vec[w]=tf[w]*idf(w));
+      return vec;
+    }
+    function cosine(a,b){
+      let dot=0,na=0,nb=0;
+      for(const k in a){ dot += (a[k]||0)*(b[k]||0); na += a[k]*a[k]; }
+      for(const k in b){ nb += b[k]*b[k]; }
+      return (na && nb) ? (dot/Math.sqrt(na*nb)) : 0;
+    }
+
+    function kbAnswer(query){
+      const q = query.toLowerCase();
+      if(/(resume|cv|download)/.test(q)){
+        return 'Download resume: <a href="files/kelvin-benson-resume-en.pdf" download>EN</a> · <a href="files/kelvin-benson-resume-de.pdf" download>DE</a>.';
+      }
+      if(/(linkedin|contact|reach|email|github|xing)/.test(q)){
+        return 'Contact Kelvin via <a href="https://www.linkedin.com/in/kelvinbenson" target="_blank" rel="noreferrer noopener">LinkedIn</a>, <a href="https://www.xing.com/profile/" target="_blank" rel="noreferrer noopener">Xing</a>, or <a href="https://github.com/kelvinbenson" target="_blank" rel="noreferrer noopener">GitHub</a>.';
+      }
+
+      const qTokens = tokenize(query);
+      const qVec = vectorize(qTokens);
+      let best = {score:0, doc:null};
+      docs.forEach((d, i)=>{
+        const dVec = vectorize(docTokens[i]);
+        const score = cosine(qVec, dVec);
+        if(score > best.score) best = {score, doc:d};
+      });
+      if(best.doc && best.score >= 0.08){
+        return best.doc.answer;
+      }
+      return null;
+    }
+
+    function greetOnce(){ if(localStorage.getItem('cb_greeted')) return; row("Hi! I’m Kelvin’s assistant. Ask about <em>education</em>, <em>skills</em>, <em>certifications</em>, <em>availability</em>, or <em>resume downloads</em>."); localStorage.setItem('cb_greeted','1'); }
+    greetOnce();
+
+    form.addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const val=input.value.trim(); if(!val) return;
+      row(val,'user'); input.value='';
+      setTimeout(()=>{
+        const a=kbAnswer(val);
+        row(a || "Sorry, I don’t have an answer for that yet. You can ask about skills, certifications, education, work history, or contact details. If you need something specific, please try rephrasing your question.");
+      },250);
+    });
+
+    contactForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data=new FormData(contactForm);
+      try{
+        const res=await fetch(contactForm.getAttribute('action'), {method:'POST', body:data, headers:{'Accept':'application/json'}});
+        if(res.ok){ contactForm.reset(); row("Thanks! Your message was sent."); activateChat(); }
+        else{ row("Couldn’t send right now. Please use the Contact links."); }
+      }catch{ row("Network issue. Try again later."); }
+    });
+
+    activateChat();
+  })();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.matchMedia('(max-width: 980px)').matches) {
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(card => observer.observe(card));
+  }
+});
+</script>
+</body>
+</html>
